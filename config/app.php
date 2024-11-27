@@ -195,6 +195,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        \Nanicas\Auth\Frameworks\Laravel\Providers\AppServiceProvider::class,
+        \Nanicas\Auth\Frameworks\Laravel\Providers\BootstrapServiceProvider::class,
+        \Nanicas\Auth\Frameworks\Laravel\Providers\AuthServiceProvider::class,
+
     ],
 
     /*

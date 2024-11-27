@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85309d4524da1baae35ac151622b248f",
+    "content-hash": "6574775565f4df6b7817f08218870135",
     "packages": [
         {
             "name": "brick/math",
@@ -1990,6 +1990,43 @@
                 }
             ],
             "time": "2024-11-12T13:57:08+00:00"
+        },
+        {
+            "name": "nanicas/auth",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nanicas/authentication-library.git",
+                "reference": "6e6c58de986aba2f9e39a8609b601a919c1e4400"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nanicas/authentication-library/zipball/6e6c58de986aba2f9e39a8609b601a919c1e4400",
+                "reference": "6e6c58de986aba2f9e39a8609b601a919c1e4400",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.8"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nanicas\\Auth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "José Victor"
+                }
+            ],
+            "description": "Auth manager",
+            "support": {
+                "issues": "https://github.com/nanicas/authentication-library/issues",
+                "source": "https://github.com/nanicas/authentication-library/tree/main"
+            },
+            "time": "2024-11-15T17:49:05+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -8185,7 +8222,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "nanicas/auth": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
