@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'auth_client.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateClient::class,
         'auth_personal.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ValidatePersonalToken::class,
         'acl.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\Permissions::class,
+        'contract_domain.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ContractByDomain::class,
     ];
 }
