@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+// use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use Nanicas\Auth\Helpers\LaravelAuthHelper;
@@ -18,17 +18,34 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::middleware(['contract_domain.nanicas', 'auth_oauth.nanicas', 'acl.nanicas'])->group(function () {
+// logout
+Route::get('/logout', function () {
+    if (auth()->check()) {
+        auth()->logout();
+        return redirect('/login');
+    }
+
+    throw new Exception('User not logged in');
+});
+
+Route::middleware([
+    'contract_domain.nanicas',
+    'auth_oauth.nanicas',
+    'acl.nanicas'
+])->group(function () {
     Route::get('/test', function (Request $request) {
-        Gate::authorize('a');
-        dump(LaravelAuthHelper::getAuthInfoFromSession(request()->session()), $request->user());
+        // Gate::authorize('create');
+        dump(
+            LaravelAuthHelper::getAuthInfoFromSession($request->session()),
+            $request->user()
+        );
     });
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';

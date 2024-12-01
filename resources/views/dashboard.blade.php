@@ -10,6 +10,20 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
+
+                    <hr>
+                    <br>
+
+                    <pre>
+                    {{ json_encode(session()->all(), JSON_PRETTY_PRINT) }}
+                    </pre>
+
+                    <hr>
+                    <br>
+
+                    <pre>
+                        {{ trim(json_encode(request()->user(), JSON_PRETTY_PRINT)) }}
+                    </pre>
                 </div>
             </div>
         </div>
