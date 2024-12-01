@@ -1997,12 +1997,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nanicas/authentication-library.git",
-                "reference": "e8ffb4b468850f949c230dea53031bb79a6b517a"
+                "reference": "f490b4c9ffad2e2ca4a64edd350a5da73bddb8bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nanicas/authentication-library/zipball/e8ffb4b468850f949c230dea53031bb79a6b517a",
-                "reference": "e8ffb4b468850f949c230dea53031bb79a6b517a",
+                "url": "https://api.github.com/repos/nanicas/authentication-library/zipball/f490b4c9ffad2e2ca4a64edd350a5da73bddb8bd",
+                "reference": "f490b4c9ffad2e2ca4a64edd350a5da73bddb8bd",
                 "shasum": ""
             },
             "require": {
@@ -2026,7 +2026,7 @@
                 "issues": "https://github.com/nanicas/authentication-library/issues",
                 "source": "https://github.com/nanicas/authentication-library/tree/main"
             },
-            "time": "2024-12-01T12:15:23+00:00"
+            "time": "2024-12-01T16:43:13+00:00"
         },
         {
             "name": "nesbot/carbon",
