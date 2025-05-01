@@ -64,10 +64,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'auth_oauth.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\Authenticate::class,
-        'auth_client.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateClient::class,
-        'auth_personal.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ValidatePersonalToken::class,
-        'acl.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\Permissions::class,
-        'contract_domain.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ContractByDomain::class,
+        'auth_oauth.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateOauth::class,
+        // 'auth_client.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateClient::class,
+        // 'validate_personal_token.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ValidatePersonalToken::class,
+        // 'define_contract_by_domain.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\DefineContractByDomain::class,
     ];
 }
