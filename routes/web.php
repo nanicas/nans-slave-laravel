@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +35,22 @@ Route::middleware([
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/redirect', function (Request $request) {
+    $state = Str::random(40);
+    // $request->session()->put('state', $state);
+
+    $query = http_build_query([
+        'client_id' => 10,
+        'redirect_uri' => 'http://tatame_mvp.local.com:8010/callback',
+        'response_type' => 'code',
+        'scope' => '',
+        'state' => $state,
+        'prompt' => 'consent', // "none", "consent", or "login"
+    ]);
+
+    return redirect('http://authentication.local.com:8002/oauth/authorize?' . $query);
 });
 
 require __DIR__ . '/auth.php';
