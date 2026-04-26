@@ -25,6 +25,10 @@
                         {{ trim(json_encode(request()->user(), JSON_PRETTY_PRINT)) }}
                     </pre>
                 </div>
+
+                <a href="{{ route('redirect.camaleao') }}" class="text-white">
+                    Redirect to Camaleao App
+                </a>
             </div>
         </div>
     </div>

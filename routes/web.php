@@ -6,6 +6,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Http;
+use Nanicas\Auth\Contracts\AuthenticationClient;
+use Illuminate\Support\Facades\Auth;
+use Nanicas\Auth\Frameworks\Laravel\Helpers\AuthHelper;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,20 +42,54 @@ Route::middleware([
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/redirect', function (Request $request) {
-    $state = Str::random(40);
-    // $request->session()->put('state', $state);
+Route::get('/redirect', function(Request $request) {
+    $request->session()->put('state', $state = Str::random(40));
+
+    $client_id_slave = '8';
+    $redirect_uri_slave = 'http://slave.local.com:8011/callback';
 
     $query = http_build_query([
-        'client_id' => 10,
-        'redirect_uri' => 'http://tatame_mvp.local.com:8010/callback',
+        'client_id' => $client_id_slave,
+        'redirect_uri' => $redirect_uri_slave,
         'response_type' => 'code',
+        'prompt' => 'consent',
         'scope' => '',
         'state' => $state,
-        'prompt' => 'consent', // "none", "consent", or "login"
     ]);
 
     return redirect('http://authentication.local.com:8002/oauth/authorize?' . $query);
-});
+})->name('redirect.slave');
+
+Route::get('callback', function (Request $request) {
+    if ($request->state !== session('state')) {
+        abort(403, 'Invalid state');
+    }
+
+    $code = $request->code;
+    $response = Http::asForm()->post(config('nanicas_auth')['AUTHENTICATION_API_URL'] . 'oauth/token', [
+        'grant_type' => 'authorization_code',
+        'client_id' => config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'],
+        'client_secret' => config('nanicas_auth')['AUTHENTICATION_CLIENT_SECRET'],
+        'redirect_uri' => 'http://slave.local.com:8011/callback',
+        'code' => $code,
+    ]);
+
+    $authService = app()->make(AuthenticationClient::class);
+    $userResponse = $authService->retrieveByToken($response->json()['access_token']);
+    $user = new User($userResponse['body']);
+    $user->exists = true;
+
+    Auth::login($user);
+    AuthHelper::putAuthInfoInSession(
+        session(),
+        $response->json()
+    );
+
+    return redirect('/dashboard');
+})->name('callback');
+
+Route::get('/redirect/camaleao', function() {
+    return redirect('http://camaleao.local.com:8000/redirect');
+})->name('redirect.camaleao');
 
 require __DIR__ . '/auth.php';
