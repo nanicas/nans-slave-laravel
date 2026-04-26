@@ -34,7 +34,9 @@ Route::get('/logout', function () {
 });
 
 Route::middleware([
+    // 'define_contract_by_domain.nanicas',
     'auth_oauth.nanicas',
+    // 'authorizate_request_user_session.nanicas',
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

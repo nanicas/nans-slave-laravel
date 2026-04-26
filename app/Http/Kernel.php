@@ -65,8 +65,11 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'auth_oauth.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateOauth::class,
+        // @note: These middlewares are not being used in the project, but they are available in the authentication library, so I left them here as a reference for future use if needed.
+        // 'authorizate_request_user_session.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthorizateWithRequestUserSession::class,
+        // 'define_contract_by_domain.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\DefineContractByDomain::class,
         // 'auth_client.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthenticateClient::class,
         // 'validate_personal_token.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\ValidatePersonalToken::class,
-        // 'define_contract_by_domain.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\DefineContractByDomain::class,
+        // 'authorizate_dynamic_contract_stateless.nanicas' => \Nanicas\Auth\Frameworks\Laravel\Http\Middleware\AuthorizateWithDynamicContractStateless::class,
     ];
 }

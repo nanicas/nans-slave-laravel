@@ -1998,12 +1998,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nanicas/nans-authentication-library.git",
-                "reference": "aa0c08edb2dd4065de7382d5c395adbc8c488fb3"
+                "reference": "ca28b4a9e77d6fd840454d5d4ed4a9d8dd7b0347"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nanicas/nans-authentication-library/zipball/aa0c08edb2dd4065de7382d5c395adbc8c488fb3",
-                "reference": "aa0c08edb2dd4065de7382d5c395adbc8c488fb3",
+                "url": "https://api.github.com/repos/nanicas/nans-authentication-library/zipball/ca28b4a9e77d6fd840454d5d4ed4a9d8dd7b0347",
+                "reference": "ca28b4a9e77d6fd840454d5d4ed4a9d8dd7b0347",
                 "shasum": ""
             },
             "require": {
@@ -2027,7 +2027,7 @@
                 "issues": "https://github.com/nanicas/nans-authentication-library/issues",
                 "source": "https://github.com/nanicas/nans-authentication-library/tree/main"
             },
-            "time": "2025-12-26T11:39:28+00:00"
+            "time": "2026-04-26T14:19:08+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -5602,16 +5602,16 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "d870a33f0f79d2b4579740b0620200221ee44aeb"
+                "reference": "8e1051fe39379367aecf014f41744ce7539a856f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/d870a33f0f79d2b4579740b0620200221ee44aeb",
-                "reference": "d870a33f0f79d2b4579740b0620200221ee44aeb",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/8e1051fe39379367aecf014f41744ce7539a856f",
+                "reference": "8e1051fe39379367aecf014f41744ce7539a856f",
                 "shasum": ""
             },
             "require": {
@@ -5648,7 +5648,7 @@
             ],
             "support": {
                 "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/2.1.0"
+                "source": "https://github.com/voku/portable-ascii/tree/2.1.1"
             },
             "funding": [
                 {
@@ -5672,7 +5672,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-16T23:10:39+00:00"
+            "time": "2026-04-26T05:33:54+00:00"
         }
     ],
     "packages-dev": [
