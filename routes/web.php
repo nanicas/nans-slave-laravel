@@ -23,7 +23,6 @@ use App\Models\User;
 |
 */
 
-// logout
 Route::get('/logout', function () {
     if (auth()->check()) {
         auth()->logout();
@@ -47,12 +46,12 @@ Route::middleware([
 Route::get('/redirect', function(Request $request) {
     $request->session()->put('state', $state = Str::random(40));
 
-    $client_id_slave = '8';
-    $redirect_uri_slave = 'http://slave.local.com:8011/callback';
+    $client_id = config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'];
+    $redirect_uri = 'http://slave.local.com:8011/callback';
 
     $query = http_build_query([
-        'client_id' => $client_id_slave,
-        'redirect_uri' => $redirect_uri_slave,
+        'client_id' => $client_id,
+        'redirect_uri' => $redirect_uri,
         'response_type' => 'code',
         'prompt' => 'consent',
         'scope' => '',
