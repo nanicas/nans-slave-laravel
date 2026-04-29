@@ -49,18 +49,17 @@ Route::get('/redirect', function(Request $request) {
     $config = config('nanicas_auth');
 
     $client_id = $config['AUTHENTICATION_CLIENT_ID'];
-    $redirect_uri = $config['APPLICATION_CALLBACK'];
-
+    
     $query = http_build_query([
         'client_id' => $client_id,
-        'redirect_uri' => $redirect_uri,
+        'redirect_uri' => env('APPLICATION_CALLBACK_URL'),
         'response_type' => 'code',
         'prompt' => 'consent',
         'scope' => '',
         'state' => $state,
     ]);
 
-    return redirect($config['AUTHENTICATION_API_URL_EXTERNAL'] .'oauth/authorize?' . $query);
+    return redirect($config['AUTHENTICATION_API_URL'] .'oauth/authorize?' . $query);
 })->name('redirect.slave');
 
 Route::get('callback', function (Request $request) {
@@ -75,7 +74,7 @@ Route::get('callback', function (Request $request) {
         'grant_type' => 'authorization_code',
         'client_id' => config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'],
         'client_secret' => config('nanicas_auth')['AUTHENTICATION_CLIENT_SECRET'],
-        'redirect_uri' => $config['APPLICATION_CALLBACK'],
+        'redirect_uri' => env('APPLICATION_CALLBACK_URL'),
         'code' => $code,
     ]);
 
@@ -94,7 +93,7 @@ Route::get('callback', function (Request $request) {
 })->name('callback');
 
 Route::get('/redirect/camaleao', function() {
-    return redirect(config('nanicas_auth')['APPLICATION_REDIRECT']);
+    return redirect(env('APPLICATION_REDIRECT_URL'));
 })->name('redirect.camaleao');
 
 require __DIR__ . '/auth.php';
