@@ -93,7 +93,7 @@ Route::get('callback', function (Request $request) {
 })->name('callback');
 
 Route::get('/redirect/camaleao', function() {
-    return redirect(env('APPLICATION_REDIRECT_URL'));
+    return redirect(env('THIRDY_APPLICATION_REDIRECT_URL'));
 })->name('redirect.camaleao');
 
 require __DIR__ . '/auth.php';
