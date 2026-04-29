@@ -46,8 +46,10 @@ Route::middleware([
 Route::get('/redirect', function(Request $request) {
     $request->session()->put('state', $state = Str::random(40));
 
-    $client_id = config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'];
-    $redirect_uri = 'http://slave.local.com:8011/callback';
+    $config = config('nanicas_auth');
+
+    $client_id = $config['AUTHENTICATION_CLIENT_ID'];
+    $redirect_uri = $config['APPLICATION_CALLBACK'];
 
     $query = http_build_query([
         'client_id' => $client_id,
@@ -58,7 +60,7 @@ Route::get('/redirect', function(Request $request) {
         'state' => $state,
     ]);
 
-    return redirect('http://authentication.local.com:8002/oauth/authorize?' . $query);
+    return redirect($config['AUTHENTICATION_API_URL_EXTERNAL'] .'oauth/authorize?' . $query);
 })->name('redirect.slave');
 
 Route::get('callback', function (Request $request) {
@@ -66,12 +68,14 @@ Route::get('callback', function (Request $request) {
         abort(403, 'Invalid state');
     }
 
+    $config = config('nanicas_auth');
+
     $code = $request->code;
-    $response = Http::asForm()->post(config('nanicas_auth')['AUTHENTICATION_API_URL'] . 'oauth/token', [
+    $response = Http::asForm()->post($config['AUTHENTICATION_API_URL'] . 'oauth/token', [
         'grant_type' => 'authorization_code',
         'client_id' => config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'],
         'client_secret' => config('nanicas_auth')['AUTHENTICATION_CLIENT_SECRET'],
-        'redirect_uri' => 'http://slave.local.com:8011/callback',
+        'redirect_uri' => $config['APPLICATION_CALLBACK'],
         'code' => $code,
     ]);
 
@@ -90,7 +94,7 @@ Route::get('callback', function (Request $request) {
 })->name('callback');
 
 Route::get('/redirect/camaleao', function() {
-    return redirect('http://camaleao.local.com:8000/redirect');
+    return redirect(config('nanicas_auth')['APPLICATION_REDIRECT']);
 })->name('redirect.camaleao');
 
 require __DIR__ . '/auth.php';
