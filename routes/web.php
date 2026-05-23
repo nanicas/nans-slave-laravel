@@ -46,9 +46,19 @@ Route::middleware([
 Route::get('/redirect', function (Request $request) {
     $request->session()->put('state', $state = Str::random(40));
 
+    $request->session()->put(
+        'code_verifier',
+        $code_verifier = Str::random(128)
+    );
+
+    $codeChallenge = strtr(rtrim(
+        base64_encode(hash('sha256', $code_verifier, true)),
+        '='
+    ), '+/', '-_');
+
     $config = config('nanicas_auth');
 
-    $client_id = $config['AUTHENTICATION_CLIENT_ID'];
+    $client_id = $config['AUTHENTICATION_CLIENT_ID_PUBLIC'];
 
     $query = http_build_query([
         'client_id' => $client_id,
@@ -57,24 +67,31 @@ Route::get('/redirect', function (Request $request) {
         'prompt' => 'consent',
         'scope' => '',
         'state' => $state,
+        'code_challenge' => $codeChallenge,
+        'code_challenge_method' => 'S256',
     ]);
 
     return redirect($config['AUTHENTICATION_API_URL_PUBLIC'] . 'oauth/authorize?' . $query);
 })->name('redirect.slave');
 
 Route::get('callback', function (Request $request) {
-    if ($request->state !== session('state')) {
-        abort(403, 'Invalid state');
-    }
+    $state = $request->session()->pull('state');
+
+    $codeVerifier = $request->session()->pull('code_verifier');
+
+    throw_unless(
+        strlen($state) > 0 && $state === $request->state,
+        InvalidArgumentException::class
+    );
 
     $config = config('nanicas_auth');
 
     $code = $request->code;
     $response = Http::asForm()->post($config['AUTHENTICATION_API_URL'] . 'oauth/token', [
         'grant_type' => 'authorization_code',
-        'client_id' => config('nanicas_auth')['AUTHENTICATION_CLIENT_ID'],
-        'client_secret' => config('nanicas_auth')['AUTHENTICATION_CLIENT_SECRET'],
+        'client_id' => $config['AUTHENTICATION_CLIENT_ID_PUBLIC'],
         'redirect_uri' => env('APPLICATION_CALLBACK_URL'),
+        'code_verifier' => $codeVerifier,
         'code' => $code,
     ]);
 
