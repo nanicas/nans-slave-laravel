@@ -43,13 +43,13 @@ Route::middleware([
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/redirect', function(Request $request) {
+Route::get('/redirect', function (Request $request) {
     $request->session()->put('state', $state = Str::random(40));
 
     $config = config('nanicas_auth');
 
     $client_id = $config['AUTHENTICATION_CLIENT_ID'];
-    
+
     $query = http_build_query([
         'client_id' => $client_id,
         'redirect_uri' => env('APPLICATION_CALLBACK_URL'),
@@ -59,7 +59,7 @@ Route::get('/redirect', function(Request $request) {
         'state' => $state,
     ]);
 
-    return redirect($config['AUTHENTICATION_API_URL'] .'oauth/authorize?' . $query);
+    return redirect($config['AUTHENTICATION_API_URL_PUBLIC'] . 'oauth/authorize?' . $query);
 })->name('redirect.slave');
 
 Route::get('callback', function (Request $request) {
@@ -92,7 +92,7 @@ Route::get('callback', function (Request $request) {
     return redirect('/dashboard');
 })->name('callback');
 
-Route::get('/redirect/camaleao', function() {
+Route::get('/redirect/camaleao', function () {
     return redirect(env('THIRDY_APPLICATION_REDIRECT_URL'));
 })->name('redirect.camaleao');
 
